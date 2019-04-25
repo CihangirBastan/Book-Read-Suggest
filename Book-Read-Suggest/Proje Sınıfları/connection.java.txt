@@ -1,0 +1,29 @@
+package book.read.suggest;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class connection {
+
+    private Connection conn = null; //Baðlantý nesnemiz
+    private String url = "jdbc:mysql://localhost:3306/";//veritabanýnýn adresi ve portu
+    private String dbName = "bx"; //veritabanýnýn ismi
+    private String properties = "?useUnicode=true&characterEncoding=utf8"; //Türkçe karakter problemi yaþamamak için
+    private String driver = "com.mysql.jdbc.Driver";//mySQL ile Java arasýndaki baðlantýyý saðlayan JDBC sürücüsü
+    private String userName = "root"; //veritabaný için kullanýcý adý
+    private String password = ""; //kullanýcý þifresi
+    private ResultSet res; // sorgulardan dönecek kayýtlar (sonuç kümesi) bu nesne içerisinde tutulacak
+
+    public PreparedStatement connectionOpen(String sql) throws Exception {
+        Class.forName(driver).newInstance();
+        conn = DriverManager.getConnection(url + dbName, userName, password);//baðlantý açýlýyor
+        return conn.prepareStatement(sql); //sorguya uygun hazýr ifadeyi döndür
+    }
+
+    public void connectionClose() throws SQLException {
+        conn.close();
+    }
+}

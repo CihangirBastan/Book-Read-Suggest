@@ -1,0 +1,3346 @@
+package book.read.suggest;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
+public class AddBook extends javax.swing.JFrame {
+
+    private ResultSet res; // sorgulardan dönecek kayýtlar (sonuç kümesi) bu nesne içerisinde tutulacak
+    private Connection conn = null; //Baðlantý nesnemiz
+    private String properties = "?useUnicode=true&characterEncoding=utf8"; //Türkçe karakter problemi yaþamamak için
+    
+    public AddBook() {
+        initComponents();
+    }
+
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        addbookButton = new javax.swing.JButton();
+        isbnTextField = new javax.swing.JTextField();
+        bookauthorTextField = new javax.swing.JTextField();
+        yearofpublicationTextField = new javax.swing.JTextField();
+        publisherTextField = new javax.swing.JTextField();
+        booktitleTextField = new javax.swing.JTextField();
+        urlSTextField = new javax.swing.JTextField();
+        urlMTextField = new javax.swing.JTextField();
+        urlLTextField = new javax.swing.JTextField();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel1.setText("Kitap Ekle");
+
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jLabel2.setText("ISBN");
+
+        jLabel3.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jLabel3.setText("Book-Title");
+
+        jLabel4.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jLabel4.setText("Book-Author");
+
+        jLabel5.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jLabel5.setText("Year-Of-Publication");
+
+        jLabel6.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jLabel6.setText("Publisher");
+
+        jLabel7.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jLabel7.setText("Image-URL-S");
+
+        jLabel8.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jLabel8.setText("Image-URL-M");
+
+        jLabel9.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jLabel9.setText("Image-URL-L");
+
+        addbookButton.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        addbookButton.setText("EKLE");
+        addbookButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addbookButtonMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(bookauthorTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(isbnTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(yearofpublicationTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(booktitleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(34, 34, 34)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(72, 72, 72)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(urlMTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
+                            .addComponent(urlLTextField)
+                            .addComponent(publisherTextField)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(urlSTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(addbookButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(164, 164, 164))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(396, 396, 396)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(isbnTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(publisherTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(53, 53, 53)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(urlSTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(booktitleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(39, 39, 39)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bookauthorTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(urlMTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(50, 50, 50)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(yearofpublicationTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(urlLTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(50, 50, 50)
+                .addComponent(addbookButton, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 963, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(30, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31))
+        );
+
+        pack();
+    }// </editor-fold>                        
+
+    private void addbookButtonMouseClicked(java.awt.event.MouseEvent evt) {                                           
+        String isbn = isbnTextField.getText();//Girilen degerleri degiskenlere atiyor
+        String title = booktitleTextField.getText();
+        String author = bookauthorTextField.getText();
+        String publication = yearofpublicationTextField.getText();
+        String publisher = publisherTextField.getText();
+        String urlS = urlSTextField.getText();
+        String urlM = urlMTextField.getText();
+        String urlL = urlLTextField.getText();
+
+        int control = ControlEmpty(isbn, title, author, publication, publisher, urlS, urlM, urlL);//Girilen degerlerin bos olup olmadigini kontrol ediyor
+        try {
+            if (control == 0) {
+                add(isbn, title, author, publication, publisher, urlS, urlM, urlL);//Verileri veritabanina ekliyorum
+                JOptionPane.showConfirmDialog(null, "Baþarýyla Kitap Kayýt Edildi ", "Book Table", JOptionPane.PLAIN_MESSAGE);
+            } else {
+                JOptionPane.showConfirmDialog(null, "Kitap Kayýt Edilemedi. Lütfen Heryeri Doldurunuz ", "Book Table", JOptionPane.PLAIN_MESSAGE);
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(AddBook.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }                                          
+//Gelen verilere gore veritabanina ekliyor
+    private void add(String isbn, String title, String author, String publication, String publisher, String urlS, String urlM, String urlL) throws Exception {
+        String sql = "INSERT INTO books (isbn, book_title, book_author, year_of_publication,publisher,image_url_s,image_url_m,image_url_l) VALUES (?,?,?,?,?,?,?,?)";
+        connection connect = new connection();
+        PreparedStatement pre = connect.connectionOpen(sql);
+        pre.setString(1, isbn);
+        pre.setString(2, title);
+        pre.setString(3, author);
+        pre.setString(4, publication);
+        pre.setString(5, publisher);
+        pre.setString(6, urlS);
+        pre.setString(7, urlM);
+        pre.setString(8, urlL);
+   
+        pre.executeUpdate(); //sorguyu çalýþtýr
+        connect.connectionClose();
+    }
+
+    private int ControlEmpty(String isbn, String title, String author, String publication, String publisher, String urlS, String urlM, String urlL) {
+        if (isbn.equals("") | title.equals("") | author.equals("") | publication.equals("") | publisher.equals("") | urlS.equals("") | urlM.equals("") | urlL.equals("")) {
+            return 1; //Girilen degerlerden herhangi birisi bos ise 1 dondurup kayit eklemeyecek
+        }
+        return 0;
+    }
+
+    public static void main(String args[]) {
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(AddBook.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new AddBook().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify                     
+    private javax.swing.JButton addbookButton;
+    private javax.swing.JTextField bookauthorTextField;
+    private javax.swing.JTextField booktitleTextField;
+    private javax.swing.JTextField isbnTextField;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField publisherTextField;
+    private javax.swing.JTextField urlLTextField;
+    private javax.swing.JTextField urlMTextField;
+    private javax.swing.JTextField urlSTextField;
+    private javax.swing.JTextField yearofpublicationTextField;
+    // End of variables declaration                   
+}
+
+
+
+package book.read.suggest;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class connection {
+
+    private Connection conn = null; //Baðlantý nesnemiz
+    private String url = "jdbc:mysql://localhost:3306/";//veritabanýnýn adresi ve portu
+    private String dbName = "bx"; //veritabanýnýn ismi
+    private String properties = "?useUnicode=true&characterEncoding=utf8"; //Türkçe karakter problemi yaþamamak için
+    private String driver = "com.mysql.jdbc.Driver";//mySQL ile Java arasýndaki baðlantýyý saðlayan JDBC sürücüsü
+    private String userName = "root"; //veritabaný için kullanýcý adý
+    private String password = ""; //kullanýcý þifresi
+    private ResultSet res; // sorgulardan dönecek kayýtlar (sonuç kümesi) bu nesne içerisinde tutulacak
+
+    public PreparedStatement connectionOpen(String sql) throws Exception {
+        Class.forName(driver).newInstance();
+        conn = DriverManager.getConnection(url + dbName, userName, password);//baðlantý açýlýyor
+        return conn.prepareStatement(sql); //sorguya uygun hazýr ifadeyi döndür
+    }
+
+    public void connectionClose() throws SQLException {
+        conn.close();
+    }
+}
+
+package book.read.suggest;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
+public class DeleteBook extends javax.swing.JFrame {
+
+    private ResultSet res; // sorgulardan dönecek kayýtlar (sonuç kümesi) bu nesne içerisinde tutulacak
+    private Connection conn = null; //Baðlantý nesnemiz
+    private String properties = "?useUnicode=true&characterEncoding=utf8"; //Türkçe karakter problemi yaþamamak için
+
+    public DeleteBook() {
+        initComponents();
+    }
+
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        isbnTextField = new javax.swing.JTextField();
+        deleteButton = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jLabel1.setText("ISBN");
+
+        deleteButton.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        deleteButton.setText("Sil");
+        deleteButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteButtonMouseClicked(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel2.setText("Kitap Sil");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(210, 210, 210)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(94, 94, 94))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(isbnTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(48, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(54, 54, 54)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(isbnTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
+                .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(65, 65, 65))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>                        
+
+    private void deleteButtonMouseClicked(java.awt.event.MouseEvent evt) {                                          
+
+        String isbn = isbnTextField.getText();
+        String sql = ("DELETE FROM books WHERE isbn = ? LIMIT 1");
+        connection connect = new connection();
+        PreparedStatement pre;
+        try {
+            pre = connect.connectionOpen(sql);
+            String control = Control(isbn);//Kayitin var olup olmadigini kontrol ediyor varsa ayni isbn degerini donduruyor
+            pre.setString(1, isbn);
+            pre.executeUpdate(); //sorguyu çalýþtýr
+            connect.connectionClose();
+            if (control.equals(isbn)) {
+                JOptionPane.showConfirmDialog(null, isbn + " Kitap Baþarýyla Silindi", "Books Table", JOptionPane.PLAIN_MESSAGE);
+            } else {
+                JOptionPane.showConfirmDialog(null, " Kayýt Bulunamadý", "Books Table", JOptionPane.PLAIN_MESSAGE);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(DeleteUser.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showConfirmDialog(null, " Kayýt Silinemedi", "Books Table", JOptionPane.PLAIN_MESSAGE);
+        }
+
+    }                                         
+
+    private String Control(String isbn) throws Exception {
+
+        String sql = "SELECT isbn FROM books WHERE isbn = " + isbn + " LIMIT 1";
+        connection connect = new connection();
+        PreparedStatement pre;
+        pre = connect.connectionOpen(sql);
+
+        try {
+            
+            res = pre.executeQuery(); //Sql sorgusunu calistirir
+            String control = "-1";
+            while (res.next()) {
+                control = res.getString(1);
+            }
+            connect.connectionClose();
+            if (control.equals(isbn)) {
+                return isbn;
+            }
+
+        } catch (SQLException ex) {
+
+        }
+
+        return "-1";
+    }
+
+    public static void main(String args[]) {
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+
+                }
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(DeleteBook.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        //</editor-fold>
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new DeleteBook().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify                     
+    private javax.swing.JButton deleteButton;
+    private javax.swing.JTextField isbnTextField;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
+    // End of variables declaration                   
+}
+
+
+package book.read.suggest;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
+public class DeleteUser extends javax.swing.JFrame {
+
+    private ResultSet res; // sorgulardan dönecek kayýtlar (sonuç kümesi) bu nesne içerisinde tutulacak
+    private Connection conn = null; //Baðlantý nesnemiz
+    private String properties = "?useUnicode=true&characterEncoding=utf8"; //Türkçe karakter problemi yaþamamak için
+
+    public DeleteUser() {
+        initComponents();
+    }
+
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        usernameTextField = new javax.swing.JTextField();
+        deleteButton = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jLabel1.setText("Kullanýcý Adý");
+
+        deleteButton.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        deleteButton.setText("Sil");
+        deleteButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteButtonMouseClicked(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel2.setText("Kullanýcý Sil");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(159, 159, 159)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(260, 260, 260)
+                        .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(36, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(usernameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(46, 46, 46))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(67, 67, 67)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(usernameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
+                .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(50, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>                        
+
+    private void deleteButtonMouseClicked(java.awt.event.MouseEvent evt) {                                          
+
+        String username = usernameTextField.getText();
+        String sql = ("DELETE FROM users WHERE username = ? LIMIT 1");
+        connection connect = new connection();
+        PreparedStatement pre;
+        try {
+            pre = connect.connectionOpen(sql);
+            String control = Control(username);//Kayitin var olup olmadigini kontrol ediyor varsa ayni isbn degerini donduruyor
+            pre.setString(1, username);
+            pre.executeUpdate(); //sorguyu çalýþtýr
+            connect.connectionClose();
+            if (control.equals(username)) {
+                JOptionPane.showConfirmDialog(null, username + "Kullanýcý Baþarýyla Silindi", "Users Table", JOptionPane.PLAIN_MESSAGE);
+            } else {
+                JOptionPane.showConfirmDialog(null, " Kullanýcý Bulunamadý", "Users Table", JOptionPane.PLAIN_MESSAGE);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(DeleteUser.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showConfirmDialog(null, " Kayýt Silinemedi", "Users Table", JOptionPane.PLAIN_MESSAGE);
+        }
+
+    }                                         
+
+    private String Control(String username) throws Exception {
+
+        String sql = "SELECT username FROM users WHERE username ='" + username + "' LIMIT 1";
+        connection connect = new connection();
+        PreparedStatement pre;
+        pre = connect.connectionOpen(sql);
+        try {
+
+            res = pre.executeQuery(); //Sql sorgusunu calistirir
+            String control = "-1";
+            while (res.next()) {
+                control = res.getString(1);
+            }
+            connect.connectionClose();
+      
+            if (control.equals(username)) {
+                return username;
+            }
+        } catch (SQLException ex) {
+
+        }
+        return "-1";
+    }
+
+    public static void main(String args[]) {
+
+        try {   
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(DeleteUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new DeleteUser().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify                     
+    private javax.swing.JButton deleteButton;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField usernameTextField;
+    // End of variables declaration                   
+}
+
+
+package book.read.suggest;
+
+import java.awt.Desktop;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.table.DefaultTableModel;
+
+public class ListMain extends javax.swing.JFrame {
+    
+    private ResultSet res; // sorgulardan dönecek kayýtlar (sonuç kümesi) bu nesne içerisinde tutulacak
+    private String properties = "?useUnicode=true&characterEncoding=utf8"; //Türkçe karakter problemi yaþamamak için
+    private int user_id;
+    
+    public ListMain() throws MalformedURLException, IOException {
+        initComponents();
+        addComboBox("user_id", "users"); //ComboBox'lara sayfalama icin sayfa numaralarýný yaziyor
+        addComboBox("isbn", "books");
+        addComboBox("user_id", "book_ratings");
+        
+    }
+    
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    private void initComponents() {
+
+        tab = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        usersTable = new javax.swing.JTable();
+        usersListele = new javax.swing.JButton();
+        partusersComboBox = new javax.swing.JComboBox<>();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane12 = new javax.swing.JScrollPane();
+        booksTable = new javax.swing.JTable();
+        booksListele = new javax.swing.JButton();
+        partbooksComboBox = new javax.swing.JComboBox<>();
+        picturebookLabel = new javax.swing.JLabel();
+        readButton = new javax.swing.JButton();
+        suggestButton = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        booksratingsList = new javax.swing.JButton();
+        partratingsComboBox = new javax.swing.JComboBox<>();
+        jScrollPane13 = new javax.swing.JScrollPane();
+        booksratingsTable = new javax.swing.JTable();
+        jPanel5 = new javax.swing.JPanel();
+        jScrollPane14 = new javax.swing.JScrollPane();
+        bestbooksTable = new javax.swing.JTable();
+        bestButton = new javax.swing.JButton();
+        bestpictureLabel = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        popularButton = new javax.swing.JButton();
+        jScrollPane15 = new javax.swing.JScrollPane();
+        popularbooksTable = new javax.swing.JTable();
+        popularpictureLabel = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        newButton = new javax.swing.JButton();
+        newpictureLabel = new javax.swing.JLabel();
+        jScrollPane17 = new javax.swing.JScrollPane();
+        newbooksTable = new javax.swing.JTable();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        usersTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "User-ID", "Location", "Age", "Username", "Password"
+            }
+        ));
+        jScrollPane2.setViewportView(usersTable);
+
+        usersListele.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        usersListele.setText("List");
+        usersListele.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                usersListeleMouseClicked(evt);
+            }
+        });
+
+        partusersComboBox.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(partusersComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(usersListele, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE))
+                .addGap(36, 36, 36)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 814, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addComponent(usersListele, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(73, 73, 73)
+                        .addComponent(partusersComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 605, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(14, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 627, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        tab.addTab("Kullanýcýlar", jPanel1);
+
+        booksTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "ISBN", "Book-Title", "Book-Author", "Year-Of-Publication", "Publisher", "Image-URL-M	"
+            }
+        ));
+        booksTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                booksTableMousePressed(evt);
+            }
+        });
+        jScrollPane12.setViewportView(booksTable);
+
+        booksListele.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        booksListele.setText("List");
+        booksListele.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                booksListeleMouseClicked(evt);
+            }
+        });
+
+        partbooksComboBox.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+
+        picturebookLabel.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+
+        readButton.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        readButton.setText("Oku");
+        readButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                readButtonMouseClicked(evt);
+            }
+        });
+
+        suggestButton.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        suggestButton.setText("Öneri");
+        suggestButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                suggestButtonMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(readButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(booksListele, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+                                .addComponent(partbooksComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(suggestButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(picturebookLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 792, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(68, 68, 68))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addComponent(booksListele, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39)
+                .addComponent(partbooksComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42)
+                .addComponent(readButton, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addComponent(suggestButton, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37)
+                .addComponent(picturebookLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jScrollPane12)
+                .addContainerGap())
+        );
+
+        tab.addTab("Kitaplar", jPanel3);
+
+        booksratingsList.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        booksratingsList.setText("List");
+        booksratingsList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                booksratingsListMouseClicked(evt);
+            }
+        });
+
+        partratingsComboBox.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+
+        booksratingsTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "ID", "Marka", "Model"
+            }
+        ));
+        jScrollPane13.setViewportView(booksratingsTable);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(booksratingsList, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+                    .addComponent(partratingsComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane13, javax.swing.GroupLayout.PREFERRED_SIZE, 849, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(325, 325, 325))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(62, 62, 62)
+                        .addComponent(booksratingsList, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(70, 70, 70)
+                        .addComponent(partratingsComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(jScrollPane13, javax.swing.GroupLayout.PREFERRED_SIZE, 603, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(25, Short.MAX_VALUE))
+        );
+
+        tab.addTab("Kitap Deðerlendirme", jPanel4);
+
+        bestbooksTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "ISBN", "Book-Title", "Book-Author", "Year-Of-Publication", "Publisher", "Image-URL-M	"
+            }
+        ));
+        bestbooksTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                bestbooksTableMousePressed(evt);
+            }
+        });
+        jScrollPane14.setViewportView(bestbooksTable);
+
+        bestButton.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        bestButton.setText("Yenile");
+        bestButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bestButtonMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(bestButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bestpictureLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addComponent(jScrollPane14, javax.swing.GroupLayout.PREFERRED_SIZE, 825, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(406, 406, 406))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(76, 76, 76)
+                .addComponent(bestButton, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(bestpictureLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(241, 241, 241))
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane14, javax.swing.GroupLayout.PREFERRED_SIZE, 618, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
+        );
+
+        tab.addTab("En Ýyi Kitaplar", jPanel5);
+
+        popularButton.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        popularButton.setText("Yenile");
+        popularButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                popularButtonMouseClicked(evt);
+            }
+        });
+
+        popularbooksTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "ISBN", "Book-Title", "Book-Author", "Year-Of-Publication", "Publisher", "Image-URL-M	"
+            }
+        ));
+        popularbooksTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                popularbooksTableMousePressed(evt);
+            }
+        });
+        jScrollPane15.setViewportView(popularbooksTable);
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(popularButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(popularpictureLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane15, javax.swing.GroupLayout.PREFERRED_SIZE, 850, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(403, 403, 403))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(80, 80, 80)
+                .addComponent(popularButton, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(161, 161, 161)
+                .addComponent(popularpictureLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(179, Short.MAX_VALUE))
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jScrollPane15)
+                .addContainerGap())
+        );
+
+        tab.addTab("En Popüler Kitaplar", jPanel6);
+
+        newButton.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        newButton.setText("Yenile");
+        newButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                newButtonMouseClicked(evt);
+            }
+        });
+
+        newbooksTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "ISBN", "Book-Title", "Book-Author", "Year-Of-Publication", "Publisher", "Image-URL-M	"
+            }
+        ));
+        newbooksTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                newbooksTableMousePressed(evt);
+            }
+        });
+        jScrollPane17.setViewportView(newbooksTable);
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(newpictureLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(newButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
+                .addComponent(jScrollPane17, javax.swing.GroupLayout.DEFAULT_SIZE, 806, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(75, 75, 75)
+                .addComponent(newButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(147, 147, 147)
+                .addComponent(newpictureLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane17, javax.swing.GroupLayout.DEFAULT_SIZE, 627, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        tab.addTab("Yeni Kitaplar", jPanel7);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(tab, javax.swing.GroupLayout.PREFERRED_SIZE, 1044, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 48, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(tab, javax.swing.GroupLayout.PREFERRED_SIZE, 678, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(27, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>                        
+
+    private void booksratingsListMouseClicked(java.awt.event.MouseEvent evt) {                                              
+        try {
+            Object[] header = {"User ID", "ISBN", "Book Rating"};
+            int part = partratingsComboBox.getSelectedIndex();//ComboBox'daki degeri aliyor
+            part = (part + 1) * 40;//Ornegin 2.sayfayi hesaplarken ComboBox'da degeri 1 oluyor 2*40=80 e kadar olacak 2.sayfa
+            String sql = "SELECT * FROM " + "book_ratings" + " LIMIT  " + (part - 40) + ", 40";
+            TableFill("booksratingsTable", header, sql, 3); //Tabloyu dolduruyor
+        } catch (Exception ex) {
+            Logger.getLogger(ListMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }                                             
+
+    private void readButtonMouseClicked(java.awt.event.MouseEvent evt) {                                        
+        
+        try {
+            //Pdf okutmayi ornek olarak bir pdf yeterli oldugu icin default atadim.
+            //Eger tum kitaplarin pdf dosyalari bir klasorun icerisinde olsaydi
+            //Kitap ismine gore o klasorden cekip acabilirdik
+            String defaultPdf = "C:/Users/Rýdvan/Desktop/Java Çalýþma/Book-Read-Suggest/CV.pdf";
+            File myFile = new File(defaultPdf); //Pdf dosyasýnýn yolunu belirtir
+            Desktop.getDesktop().open(myFile); //Dosyasý acar
+
+        } catch (IOException ex) {
+            Logger.getLogger(ListMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }                                       
+
+    //Kitap Listeleme butonuna týklayýnca verileri tabloDoldur methoduna gönderiyor
+    private void booksListeleMouseClicked(java.awt.event.MouseEvent evt) {                                          
+        try {
+            Object[] header = {"ISBN", "Book Title", "Book Author", "Year Of Publication", "Publisher", "Image URL M"};
+            int part = partbooksComboBox.getSelectedIndex();//ComboBox'daki degeri aliyor
+            part = (part + 1) * 40;//Ornegin 2.sayfayi hesaplarken ComboBox'da degeri 1 oluyor 2*40=80 e kadar olacak 2.sayfa
+            String sql = "SELECT isbn,book_title,book_author,year_of_publication,publisher,image_url_m FROM " + "books" + " LIMIT  " + (part - 40) + ", 40";
+            TableFill("booksTable", header, sql, 6); //Tabloyu dolduruyor
+        } catch (Exception ex) {
+            Logger.getLogger(ListMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }                                         
+
+    //Kitaplar tablosunda herhangi bir satira tiklandiginda o kitabin resmini url ile cekiyor ve ekrana basiyor
+    private void booksTableMousePressed(java.awt.event.MouseEvent evt) {                                        
+        try {
+            String urlPath = (booksTable.getValueAt(booksTable.getSelectedRow(), 5).toString()); //5. sutun yani Medium boyunu aliyor
+            URL url = new URL(urlPath);
+            BufferedImage img = ImageIO.read(url);
+            ImageIcon icon = new ImageIcon(img);
+            picturebookLabel.setIcon(icon);
+        } catch (IOException ex) {
+            Logger.getLogger(ListMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }                                       
+
+    //Kullanýcý Listeleme butonuna týklayýnca verileri tabloDoldur methoduna gönderiyor
+    private void usersListeleMouseClicked(java.awt.event.MouseEvent evt) {                                          
+        try {
+            Object[] header = {"User-ID", "Location", "Age", "Username", "Password"};
+            int part = partusersComboBox.getSelectedIndex();//ComboBox'daki degeri aliyor
+            part = (part + 1) * 40;//Ornegin 2.sayfayi hesaplarken ComboBox'da degeri 1 oluyor 2*40=80 e kadar olacak 2.sayfa
+            String sql = "SELECT * FROM " + "users" + " LIMIT  " + (part - 40) + ", 40";
+            TableFill("usersTable", header, sql, 5); //Tabloyu dolduruyor
+
+        } catch (Exception ex) {
+            Logger.getLogger(ListMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }                                         
+//En yüksek oy ortalamasina sahip olan ilk 10 kitabý bulma methodu
+    private void bestButtonMouseClicked(java.awt.event.MouseEvent evt) {                                        
+        try {
+            Object[] header = {"ISBN", "Book Title", "Book Author", "Year Of Publication", "Publisher", "Image URL M"};
+            String sql = "SELECT isbn FROM `book_ratings` GROUP BY isbn ORDER BY AVG(book_rating) DESC LIMIT 0,20"; //Oy ortalamasi en yuksek ilk 10 kitap siralamasi icin SQL sorgusu
+            //Veritabaninda bir tabloda olup diger tabloda bazi kitaplar olmadigi icin ilk 20 kitabi buldum. Yaklasik ilk 10 kitabý ekrana basiyor.
+            //Bu SQL sorgusunda sadece 'book_ratings' tablosundan kitaplarin ISBN degerlerini buluyor
+
+            connection connect = new connection();
+            PreparedStatement pre = connect.connectionOpen(sql);
+            res = pre.executeQuery(); //Sql sorgusunu calistirir
+
+            String[] isbn = new String[20];
+            int count = 0;
+            while (res.next()) { //Bulunan ISBN degerlerini bir arraya atiyorum
+                isbn[count] = res.getString("isbn");
+                count++;
+            }
+            connect.connectionClose();
+            sql = "SELECT isbn,book_title,book_author,year_of_publication,publisher,image_url_m FROM `books` WHERE isbn IN ( " + isbn[0];//Onceki sorguda bulunan kitaplarin ISBN 
+            //degerlerini alip  'books' tablosundaki verilerini bulmak icin kullandim SQL sorgusu
+            for (int i = 1; i < 20; i++) {
+                sql = sql + " , " + isbn[i];
+            }
+            sql = sql + " )";
+            TableFill("bestbooksTable", header, sql, 6); //Tabloyu dolduruyor
+            connect.connectionClose();
+        } catch (Exception ex) {
+            Logger.getLogger(ListMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }                                       
+//En çok oylanan ilk 10 kitabý bulma methodu
+    private void popularButtonMouseClicked(java.awt.event.MouseEvent evt) {                                           
+        try {
+            Object[] header = {"ISBN", "Book Title", "Book Author", "Year Of Publication", "Publisher", "Image URL M"};
+            String sql = "SELECT isbn , count( * ) AS counter FROM `book_ratings` GROUP BY isbn ORDER BY counter DESC LIMIT 0,11";//En cok oylanan ilk 10 kitabýn sorgusu icin kullandigim
+            //SQL sorgusu.  Burada da sadece ISBN degerlerini buluyor
+
+            connection connect = new connection();
+            PreparedStatement pre = connect.connectionOpen(sql);
+            res = pre.executeQuery(); //Sql sorgusunu calistirir
+
+            String[] isbn = new String[11];
+            int count = 0;
+            while (res.next()) {//Bulunan ISBN degerlerini bir arraya atiyorum
+                isbn[count] = res.getString("isbn");
+                count++;
+            }
+            connect.connectionClose();
+            sql = "SELECT isbn,book_title,book_author,year_of_publication,publisher,image_url_m  FROM `books` WHERE isbn IN ( " + isbn[0];//Onceki sorguda bulunan kitaplarin ISBN 
+            //degerlerini alip  'books' tablosundaki verilerini bulmak icin kullandim SQL sorgusu
+            for (int i = 1; i < 11; i++) {
+                sql = sql + " , " + isbn[i];
+            }
+            sql = sql + " )";
+            
+            TableFill("popularbooksTable", header, sql, 6); //Tabloyu dolduruyor
+            connect.connectionClose();
+        } catch (Exception ex) {
+            Logger.getLogger(ListMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }                                          
+
+//Oy ortalamasi en yuksek olan ilk 10 kitapta herhangi bir satira tiklayinca o satirdaki kitaba ait resmi verilen url den cekip labelin iconu hale getiriyor ve resim getirilmis oluyor
+    private void bestbooksTableMousePressed(java.awt.event.MouseEvent evt) {                                            
+        try {
+            String urlPath = (bestbooksTable.getValueAt(bestbooksTable.getSelectedRow(), 5).toString()); //5. sutun yani Medium boyunu aliyor
+            URL url = new URL(urlPath);
+            BufferedImage img = ImageIO.read(url);
+            ImageIcon icon = new ImageIcon(img);
+            bestpictureLabel.setIcon(icon);
+        } catch (IOException ex) {
+            Logger.getLogger(ListMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }                                           
+//En cok oylanan ilk 10 kitapta herhangi bir satira tiklayinca o satirdaki kitaba ait resmi verilen url den cekip labelin iconu hale getiriyor ve resim getirilmis oluyor
+    private void popularbooksTableMousePressed(java.awt.event.MouseEvent evt) {                                               
+        try {
+            String urlPath = (popularbooksTable.getValueAt(popularbooksTable.getSelectedRow(), 5).toString()); //5. sutun yani Medium boyunu aliyor
+            URL url = new URL(urlPath);
+            BufferedImage img = ImageIO.read(url);
+            ImageIcon icon = new ImageIcon(img);
+            popularpictureLabel.setIcon(icon);
+        } catch (IOException ex) {
+            Logger.getLogger(ListMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }                                              
+
+    private void newButtonMouseClicked(java.awt.event.MouseEvent evt) {                                       
+        try {
+            Object[] header = {"ISBN", "Book Title", "Book Author", "Year Of Publication", "Publisher", "Image URL M"};
+            String sql = "SELECT isbn,book_title,book_author,year_of_publication,publisher,image_url_m,new FROM books order by New desc LIMIT 5";//En yeni ilk 5 kitabýn sorgusu icin kullandigim
+            //SQL sorgusu.  Burada da sadece ISBN degerlerini buluyor
+
+            TableFill("newbooksTable", header, sql, 7); //Tabloyu dolduruyor
+
+        } catch (Exception ex) {
+            Logger.getLogger(ListMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }                                      
+
+    private void newbooksTableMousePressed(java.awt.event.MouseEvent evt) {                                           
+        try {
+            String urlPath = (newbooksTable.getValueAt(newbooksTable.getSelectedRow(), 5).toString()); //5. sutun yani Medium boyunu aliyor
+            URL url = new URL(urlPath);
+            BufferedImage img = ImageIO.read(url);
+            ImageIcon icon = new ImageIcon(img);
+            newpictureLabel.setIcon(icon);
+        } catch (IOException ex) {
+            Logger.getLogger(ListMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }                                          
+
+    private void suggestButtonMouseClicked(java.awt.event.MouseEvent evt) {                                           
+        Suggest suggest=new Suggest();
+        suggest.setterUserID(user_id);
+        suggest.setVisible(true);
+    }                                          
+
+//Her sayfaya 40 satir gelecek sekilde sayfalama yaptim. Toplam veri adedini 40'a bolup kac sayfa olacak ise 1'den o sayfaya kadar ComboBox'a yerlestirdim
+    protected void addComboBox(String colomn, String table) {
+        
+        int part = 0;
+        int value = 0;
+        try {
+            value = findvalue(colomn, table); //Tablo ve kolon ismine gore veritabanýnda kac deger var onu dondurur
+            for (int i = 0; value >= 0; i++) {//Gelen satir sayisina gore (value degeri verilen tablodaki satir sayisi) bir algoritma kurdum.
+                part = part + 1;//ComboBox'in ilk degeri 1 olacak sekilde birer artiyor
+                value -= 40;//Gelen satir sayisindan surekli 40 eksilttim. 0 dan buyuk oldugu surece dongu devam edecek
+                switch (table) {
+                    case "users":
+                        partusersComboBox.addItem(part + "");
+                        break;
+                    case "books":
+                        partbooksComboBox.addItem(part + "");
+                        break;
+                    case "book_ratings":
+                        partratingsComboBox.addItem(part + "");
+                        break;
+                    default:
+                        break;
+                }
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(ListMain.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public int findvalue(String colomn, String table) throws Exception { //Tablo ve kolon ismine gore veritabanýnda kac deger var onu bulur ve dondurur
+        String sql = "SELECT COUNT(" + colomn + ") FROM " + table;
+        connection connect = new connection();
+        PreparedStatement pre = connect.connectionOpen(sql);
+        res = pre.executeQuery();
+        String counter = null;
+        while (res.next()) {
+            counter = res.getString(1);
+        }
+        connect.connectionClose();
+        return Integer.parseInt(counter);
+        
+    }
+
+    //Gelen verilere göre tabloyu doldurur
+    private void TableFill(String tbl, Object[] header, String sql, int counter) throws Exception {
+        
+        Object[][] veri;
+        connection connect = new connection();
+        PreparedStatement pre = connect.connectionOpen(sql);
+        
+        try (ResultSet set = pre.executeQuery()) {
+            int count = 0;
+            set.last();
+            count = set.getRow();
+            veri = new Object[count][counter];
+            set.first();
+            for (int i = 0; i < count; i++) {
+                for (int j = 0; j < counter; j++) {
+                    veri[i][j] = set.getObject(j + 1);
+                }
+                set.next();
+            }
+            switch (tbl) {
+                case "usersTable":
+                    usersTable.setModel(new DefaultTableModel(veri, header));
+                    break;
+                case "booksTable":
+                    booksTable.setModel(new DefaultTableModel(veri, header));
+                    break;
+                case "booksratingsTable":
+                    booksratingsTable.setModel(new DefaultTableModel(veri, header));
+                    break;
+                case "popularbooksTable":
+                    popularbooksTable.setModel(new DefaultTableModel(veri, header));
+                    break;
+                case "bestbooksTable":
+                    bestbooksTable.setModel(new DefaultTableModel(veri, header));
+                    break;
+                case "newbooksTable":
+                    newbooksTable.setModel(new DefaultTableModel(veri, header));
+                    break;
+                
+                default:
+                    break;
+            }
+        }
+        connect.connectionClose();
+        
+    }
+
+    public void setterUserID(int user_id) {
+        this.user_id = user_id;
+    }
+    
+    public static void main(String args[]) {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            
+            public void run() {
+                
+               new Login().setVisible(true);
+            //  new Suggest().setVisible(true);
+            }
+        });
+        
+    }
+
+
+    // Variables declaration - do not modify                     
+    private javax.swing.JButton bestButton;
+    private javax.swing.JTable bestbooksTable;
+    private javax.swing.JLabel bestpictureLabel;
+    private javax.swing.JButton booksListele;
+    private javax.swing.JTable booksTable;
+    private javax.swing.JButton booksratingsList;
+    private javax.swing.JTable booksratingsTable;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JScrollPane jScrollPane12;
+    private javax.swing.JScrollPane jScrollPane13;
+    private javax.swing.JScrollPane jScrollPane14;
+    private javax.swing.JScrollPane jScrollPane15;
+    private javax.swing.JScrollPane jScrollPane17;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JButton newButton;
+    private javax.swing.JTable newbooksTable;
+    private javax.swing.JLabel newpictureLabel;
+    private javax.swing.JComboBox<String> partbooksComboBox;
+    private javax.swing.JComboBox<String> partratingsComboBox;
+    private javax.swing.JComboBox<String> partusersComboBox;
+    private javax.swing.JLabel picturebookLabel;
+    private javax.swing.JButton popularButton;
+    private javax.swing.JTable popularbooksTable;
+    private javax.swing.JLabel popularpictureLabel;
+    private javax.swing.JButton readButton;
+    private javax.swing.JButton suggestButton;
+    private javax.swing.JTabbedPane tab;
+    private javax.swing.JButton usersListele;
+    private javax.swing.JTable usersTable;
+    // End of variables declaration                   
+}
+
+package book.read.suggest;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
+public class Login extends javax.swing.JFrame {
+
+    private ResultSet res; // sorgulardan dönecek kayýtlar (sonuç kümesi) bu nesne içerisinde tutulacak
+    private Connection conn = null; //Baðlantý nesnemiz
+    private String properties = "?useUnicode=true&characterEncoding=utf8"; //Türkçe karakter problemi yaþamamak için
+
+    public Login() {
+        initComponents();
+    }
+
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        loginUsername = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        loginPassword = new javax.swing.JPasswordField();
+        registerButton = new javax.swing.JButton();
+        loginButton = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
+        jLabel1.setText("Giriþ");
+
+        jLabel2.setText("Kullanýcý Adý");
+
+        jLabel3.setText("Parola");
+
+        registerButton.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        registerButton.setText("Kayýt Ol ? ");
+        registerButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                registerButtonMouseClicked(evt);
+            }
+        });
+
+        loginButton.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        loginButton.setText("Giriþ Yap");
+        loginButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                loginButtonMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(155, 155, 155)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(214, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(48, 48, 48)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(registerButton, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(loginUsername)
+                    .addComponent(loginPassword)
+                    .addComponent(loginButton, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE))
+                .addGap(62, 62, 62))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(loginUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(loginPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(registerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        pack();
+    }// </editor-fold>                        
+
+    private void registerButtonMouseClicked(java.awt.event.MouseEvent evt) {                                            
+        new Register().setVisible(true);
+    }                                           
+
+    private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {                                         
+
+        String username = loginUsername.getText();//Girilen degerleri degiskenlere atiyor
+        String password = loginPassword.getText();
+
+        try {
+            String user_id = Control(username, password);//Ayni kullanici adindan var mi kontrol icin kontrol methoduna gonderiyor
+            if (user_id.equals("-1")) {//Gelen deger -1 ise ayni kullanicidan vardir 
+                JOptionPane.showConfirmDialog(null, "Giriþ Doðrulanamadý. Tekrar Deneyiniz ", "Kullanýcý Tablosu", JOptionPane.PLAIN_MESSAGE);
+            } else {
+                JOptionPane.showConfirmDialog(null, "Giriþ Baþarýlý", "Kullanýcý Tablosu", JOptionPane.PLAIN_MESSAGE);
+
+                String sql = "SELECT authority FROM users WHERE user_id="+user_id;
+                connection connect = new connection();
+                PreparedStatement pre = connect.connectionOpen(sql);
+                res = pre.executeQuery(); //Sql sorgusunu calistirir
+                String authority = null;
+                while (res.next()) {//Kullanicinin id'sini degiskene atiyor
+                    authority = res.getString(1);
+                }
+                connect.connectionClose();
+                if (authority.equals("1")) {//Giris yapan kullanicinin yetkisi 1 ise ayni zamanda yonetim panelinide aciyor
+                    new Management().setVisible(true);
+                } else {
+                    new ListMain().setVisible(true);
+                }
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }                                        
+
+    public String Control(String username, String password) throws Exception {
+        String sql = "SELECT * FROM users WHERE username = ? AND password = ? LIMIT 1"; //Ayni kullanici adi ve parolaya sahip ilk kullaniciyi buluyor (Ilk olmasinin sebebi zaten baska 
+        // kullanici yok zamandan tasarruf adina 'LIMIT' sorgusunu da ekledim
+        connection connect = new connection();
+        PreparedStatement pre = connect.connectionOpen(sql);
+        pre.setString(1, username); //Sql sorgusundaki ? isaretli kisma gelir
+        pre.setString(2, password);
+        res = pre.executeQuery(); //Sql sorgusunu calistirir
+        String user_id = "-1";
+        while (res.next()) {//Kullanicinin id'sini degiskene atiyor
+            user_id = res.getString("user_id");
+        }
+        if (user_id.equals("-1")) {//Eger kullanici varsa farkli bir 'user_id' donecek ama yoksa degisken ayni deger olacak.Burda eger degisken degismediyse kullanici yoktur
+            // dedim ve -1 dondurdum
+            return "-1";
+        }
+        connect.connectionClose();
+        return user_id;//Eger kullanici varsa o kullanicinin user_id'sini dondurdum
+    }
+
+    public static void main(String args[]) {
+
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        //</editor-fold>
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        });
+    }
+
+    // Variables declaration - do not modify                     
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton loginButton;
+    private javax.swing.JPasswordField loginPassword;
+    private javax.swing.JTextField loginUsername;
+    private javax.swing.JButton registerButton;
+    // End of variables declaration                   
+}
+
+package book.read.suggest;
+
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class Management extends javax.swing.JFrame {
+
+    public Management() {
+        initComponents();
+    }
+
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        addbookButton = new javax.swing.JButton();
+        deletebookButton = new javax.swing.JButton();
+        listbookButton = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        listuserButton = new javax.swing.JButton();
+        deleteuserButton = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel1.setText("Yönetim Paneli");
+
+        addbookButton.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        addbookButton.setText("Ekle");
+        addbookButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addbookButtonMouseClicked(evt);
+            }
+        });
+
+        deletebookButton.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        deletebookButton.setText("Sil");
+        deletebookButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deletebookButtonMouseClicked(evt);
+            }
+        });
+
+        listbookButton.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        listbookButton.setText("Listele");
+        listbookButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listbookButtonMouseClicked(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel2.setText("Kitap Bölümü");
+
+        jLabel3.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel3.setText("Kullanýcý Bölümü");
+
+        listuserButton.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        listuserButton.setText("Listele");
+        listuserButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listuserButtonMouseClicked(evt);
+            }
+        });
+
+        deleteuserButton.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        deleteuserButton.setText("Sil");
+        deleteuserButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteuserButtonMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(349, 349, 349)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(337, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(addbookButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(deletebookButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(listbookButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                        .addComponent(deleteuserButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(listuserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(170, 170, 170))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addbookButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deleteuserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(79, 79, 79)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(deletebookButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(listuserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(81, 81, 81)
+                .addComponent(listbookButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(86, 86, 86))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>                        
+
+    private void listbookButtonMouseClicked(java.awt.event.MouseEvent evt) {                                            
+        try {
+            new ListMain().setVisible(true);//Kitap listteleme butonuna tikladinda Kitap listeleme arayuzunu acýyor
+        } catch (IOException ex) {
+            Logger.getLogger(Management.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }                                           
+
+    private void listuserButtonMouseClicked(java.awt.event.MouseEvent evt) {                                            
+        try {
+            new ListMain().setVisible(true);//Kullanici listeleme butonuna tikladinda Kullanici listeleme arayuzunu acýyor
+        } catch (IOException ex) {
+            Logger.getLogger(Management.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }                                           
+
+    private void deleteuserButtonMouseClicked(java.awt.event.MouseEvent evt) {                                              
+        new DeleteUser().setVisible(true);//Kullanici silme butonuna tikladinda kullanici silme arayuzunu acýyor
+    }                                             
+
+    private void deletebookButtonMouseClicked(java.awt.event.MouseEvent evt) {                                              
+        new DeleteBook().setVisible(true);//Kitap silme butonuna tikladinda Kitap silme arayuzunu acýyor
+    }                                             
+
+    private void addbookButtonMouseClicked(java.awt.event.MouseEvent evt) {                                           
+        new AddBook().setVisible(true);//Kitap ekleme butonuna tikladinda Kitap ekleme arayuzunu acýyor
+    }                                          
+
+    public static void main(String args[]) {
+
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Management.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Management().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify                     
+    private javax.swing.JButton addbookButton;
+    private javax.swing.JButton deletebookButton;
+    private javax.swing.JButton deleteuserButton;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton listbookButton;
+    private javax.swing.JButton listuserButton;
+    // End of variables declaration                   
+}
+package book.read.suggest;
+
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+public class RatingBook extends javax.swing.JFrame {
+
+    private ResultSet res; // sorgulardan dönecek kayýtlar (sonuç kümesi) bu nesne içerisinde tutulacak
+    private Connection conn = null; //Baðlantý nesnemiz
+    private String properties = "?useUnicode=true&characterEncoding=utf8"; //Türkçe karakter problemi yaþamamak için
+    private String user_id;
+    private int counter = 0;
+    private String username, password, location, age, authority;
+
+    public RatingBook() throws IOException {
+        initComponents();
+        addComboBox("isbn", "books");
+    }
+
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    private void initComponents() {
+
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane12 = new javax.swing.JScrollPane();
+        booksTable = new javax.swing.JTable();
+        booksList = new javax.swing.JButton();
+        partbooksComboBox = new javax.swing.JComboBox<>();
+        picturebookLabel = new javax.swing.JLabel();
+        ratingComboBox = new javax.swing.JComboBox<>();
+        ratingButton = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        booksTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "ISBN", "Book-Title", "Book-Author", "Year-Of-Publication", "Publisher", "Image-URL-M	"
+            }
+        ));
+        booksTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                booksTableMousePressed(evt);
+            }
+        });
+        jScrollPane12.setViewportView(booksTable);
+
+        booksList.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        booksList.setText("List");
+        booksList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                booksListMouseClicked(evt);
+            }
+        });
+
+        partbooksComboBox.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+
+        picturebookLabel.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+
+        ratingComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
+
+        ratingButton.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        ratingButton.setText("Oyla");
+        ratingButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ratingButtonMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(picturebookLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(partbooksComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(booksList, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(ratingButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
+                        .addComponent(ratingComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 810, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(374, 374, 374))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane12)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(booksList, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(92, 92, 92)
+                        .addComponent(partbooksComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(58, 58, 58)
+                        .addComponent(picturebookLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34)
+                        .addComponent(ratingComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44)
+                        .addComponent(ratingButton, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 21, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1101, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 1056, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(33, Short.MAX_VALUE)))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 777, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(63, Short.MAX_VALUE)))
+        );
+
+        pack();
+    }// </editor-fold>                        
+
+    private void booksTableMousePressed(java.awt.event.MouseEvent evt) {                                        
+        try {
+            String urlPath = (booksTable.getValueAt(booksTable.getSelectedRow(), 5).toString()); //6. sutun yani Medium boyunu aliyor
+            URL url = new URL(urlPath);
+            BufferedImage img = ImageIO.read(url);
+            ImageIcon icon = new ImageIcon(img);
+            picturebookLabel.setIcon(icon);
+        } catch (MalformedURLException nameOfTheException) {
+
+        } catch (IOException ex) {
+            Logger.getLogger(ListMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }                                       
+
+    private void booksListMouseClicked(java.awt.event.MouseEvent evt) {                                       
+        try {
+            Object[] header = {"ISBN", "Book Title", "Book Author", "Year Of Publication", "Publisher", "Image URL M"};
+            int part = partbooksComboBox.getSelectedIndex();//ComboBox'daki degeri aliyor 
+            part = (part + 1) * 40;//Ornegin 2.sayfayi hesaplarken ComboBox'da degeri 1 oluyor 2*40=80 e kadar olacak 2.sayfa 
+            TableFill("books", header, 6, part);
+        } catch (Exception ex) {
+            Logger.getLogger(ListMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }                                      
+
+    private void ratingButtonMouseClicked(java.awt.event.MouseEvent evt) {                                          
+
+        try {
+            int rating = ratingComboBox.getSelectedIndex();
+            String isbn = (booksTable.getValueAt(booksTable.getSelectedRow(), 0).toString()); //1. sutun yani isbn degerini aliyor
+            String sql = "INSERT INTO book_ratings (user_id, isbn, book_rating) VALUES (?,?,?)";
+            connection connect = new connection();
+            PreparedStatement pre = connect.connectionOpen(sql);
+            pre.setString(1, user_id);
+            pre.setString(2, isbn);
+            pre.setString(3, rating + "");
+            pre.executeUpdate(); //sorguyu çalýþtýr
+            connect.connectionClose();
+            counter++;//Her oy kullandigimizda sayaci 1 arttiriyoruz
+            if (counter >= 10) {
+                JOptionPane.showConfirmDialog(null, "En az 10 Oy Baþarýyla Oy Kullanýldý Giriþ Yapabilirsiniz", "Rating Table", JOptionPane.PLAIN_MESSAGE);
+                Register save = new Register();
+                save.RegisterData(username, password, user_id, location, age, authority);//10 oy kullaninca kayit islemini yapiyoruz
+            }
+            JOptionPane.showConfirmDialog(null, "Baþarýyla Oy Kullanýldý ", "Rating Table", JOptionPane.PLAIN_MESSAGE);
+        } catch (Exception ex) {
+            Logger.getLogger(RatingBook.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }                                         
+    private void addComboBox(String colomn, String table) {
+
+        int part = 0;
+        int value = 0;
+        try {
+            ListMain list = new ListMain();
+            value = list.findvalue(colomn, table); //Tablo ve kolon ismine gore veritabanýnda kac deger var onu dondurur
+            for (int i = 0; value >= 0; i++) {
+                part = part + 1;
+                value -= 40;
+                partbooksComboBox.addItem(part + "");
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(ListMain.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void setValues(String username, String password, String location, String age, String authority) {//Kayiti bu sinifta yapabilmemiz icin verileri alip sakliyoruz
+        this.username = username;
+        this.password = password;
+        this.location = location;
+        this.age = age;
+        this.username = username;
+        this.authority=authority;
+    }
+
+    public void setterUserID(String id) {
+        this.user_id = id;
+    }
+
+    public int getterCounter() {
+        return counter;
+    }
+
+    //Gelen verilere göre tabloyu doldurur
+    private void TableFill(String tbl, Object[] header, int counter, int part) throws Exception {
+
+        Object[][] veri;
+        String sql = "SELECT  isbn,book_title,book_author,year_of_publication,publisher,image_url_m  FROM " + tbl + " LIMIT  " + (part - 40) + ", 40";
+        connection connect = new connection();
+        PreparedStatement pre = connect.connectionOpen(sql);
+
+        try (ResultSet set = pre.executeQuery()) {
+            int count = 0;
+            set.last();
+            count = set.getRow();
+            veri = new Object[count][counter];
+            set.first();
+            for (int i = 0; i < count; i++) {
+                for (int j = 0; j < counter; j++) {
+                    veri[i][j] = set.getObject(j + 1);
+                }
+                set.next();
+
+                booksTable.setModel(new DefaultTableModel(veri, header));
+            }
+            connect.connectionClose();
+
+        }
+    }
+
+    public static void main(String args[]) {
+
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(RatingBook.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        //</editor-fold>
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    new RatingBook().setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(RatingBook.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+    }
+
+    // Variables declaration - do not modify                     
+    private javax.swing.JButton booksList;
+    private javax.swing.JTable booksTable;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane12;
+    private javax.swing.JComboBox<String> partbooksComboBox;
+    private javax.swing.JLabel picturebookLabel;
+    private javax.swing.JButton ratingButton;
+    private javax.swing.JComboBox<String> ratingComboBox;
+    // End of variables declaration                   
+}
+
+package book.read.suggest;
+
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+public class RatingBook extends javax.swing.JFrame {
+
+    private ResultSet res; // sorgulardan dönecek kayýtlar (sonuç kümesi) bu nesne içerisinde tutulacak
+    private Connection conn = null; //Baðlantý nesnemiz
+    private String properties = "?useUnicode=true&characterEncoding=utf8"; //Türkçe karakter problemi yaþamamak için
+    private String user_id;
+    private int counter = 0;
+    private String username, password, location, age, authority;
+
+    public RatingBook() throws IOException {
+        initComponents();
+        addComboBox("isbn", "books");
+    }
+
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    private void initComponents() {
+
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane12 = new javax.swing.JScrollPane();
+        booksTable = new javax.swing.JTable();
+        booksList = new javax.swing.JButton();
+        partbooksComboBox = new javax.swing.JComboBox<>();
+        picturebookLabel = new javax.swing.JLabel();
+        ratingComboBox = new javax.swing.JComboBox<>();
+        ratingButton = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        booksTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "ISBN", "Book-Title", "Book-Author", "Year-Of-Publication", "Publisher", "Image-URL-M	"
+            }
+        ));
+        booksTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                booksTableMousePressed(evt);
+            }
+        });
+        jScrollPane12.setViewportView(booksTable);
+
+        booksList.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        booksList.setText("List");
+        booksList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                booksListMouseClicked(evt);
+            }
+        });
+
+        partbooksComboBox.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+
+        picturebookLabel.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+
+        ratingComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
+
+        ratingButton.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        ratingButton.setText("Oyla");
+        ratingButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ratingButtonMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(picturebookLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(partbooksComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(booksList, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(ratingButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
+                        .addComponent(ratingComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 810, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(374, 374, 374))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane12)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(booksList, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(92, 92, 92)
+                        .addComponent(partbooksComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(58, 58, 58)
+                        .addComponent(picturebookLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34)
+                        .addComponent(ratingComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44)
+                        .addComponent(ratingButton, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 21, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1101, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 1056, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(33, Short.MAX_VALUE)))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 777, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(63, Short.MAX_VALUE)))
+        );
+
+        pack();
+    }// </editor-fold>                        
+
+    private void booksTableMousePressed(java.awt.event.MouseEvent evt) {                                        
+        try {
+            String urlPath = (booksTable.getValueAt(booksTable.getSelectedRow(), 5).toString()); //6. sutun yani Medium boyunu aliyor
+            URL url = new URL(urlPath);
+            BufferedImage img = ImageIO.read(url);
+            ImageIcon icon = new ImageIcon(img);
+            picturebookLabel.setIcon(icon);
+        } catch (MalformedURLException nameOfTheException) {
+
+        } catch (IOException ex) {
+            Logger.getLogger(ListMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }                                       
+
+    private void booksListMouseClicked(java.awt.event.MouseEvent evt) {                                       
+        try {
+            Object[] header = {"ISBN", "Book Title", "Book Author", "Year Of Publication", "Publisher", "Image URL M"};
+            int part = partbooksComboBox.getSelectedIndex();//ComboBox'daki degeri aliyor 
+            part = (part + 1) * 40;//Ornegin 2.sayfayi hesaplarken ComboBox'da degeri 1 oluyor 2*40=80 e kadar olacak 2.sayfa 
+            TableFill("books", header, 6, part);
+        } catch (Exception ex) {
+            Logger.getLogger(ListMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }                                      
+
+    private void ratingButtonMouseClicked(java.awt.event.MouseEvent evt) {                                          
+
+        try {
+            int rating = ratingComboBox.getSelectedIndex();
+            String isbn = (booksTable.getValueAt(booksTable.getSelectedRow(), 0).toString()); //1. sutun yani isbn degerini aliyor
+            String sql = "INSERT INTO book_ratings (user_id, isbn, book_rating) VALUES (?,?,?)";
+            connection connect = new connection();
+            PreparedStatement pre = connect.connectionOpen(sql);
+            pre.setString(1, user_id);
+            pre.setString(2, isbn);
+            pre.setString(3, rating + "");
+            pre.executeUpdate(); //sorguyu çalýþtýr
+            connect.connectionClose();
+            counter++;//Her oy kullandigimizda sayaci 1 arttiriyoruz
+            if (counter >= 10) {
+                JOptionPane.showConfirmDialog(null, "En az 10 Oy Baþarýyla Oy Kullanýldý Giriþ Yapabilirsiniz", "Rating Table", JOptionPane.PLAIN_MESSAGE);
+                Register save = new Register();
+                save.RegisterData(username, password, user_id, location, age, authority);//10 oy kullaninca kayit islemini yapiyoruz
+            }
+            JOptionPane.showConfirmDialog(null, "Baþarýyla Oy Kullanýldý ", "Rating Table", JOptionPane.PLAIN_MESSAGE);
+        } catch (Exception ex) {
+            Logger.getLogger(RatingBook.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }                                         
+    private void addComboBox(String colomn, String table) {
+
+        int part = 0;
+        int value = 0;
+        try {
+            ListMain list = new ListMain();
+            value = list.findvalue(colomn, table); //Tablo ve kolon ismine gore veritabanýnda kac deger var onu dondurur
+            for (int i = 0; value >= 0; i++) {
+                part = part + 1;
+                value -= 40;
+                partbooksComboBox.addItem(part + "");
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(ListMain.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void setValues(String username, String password, String location, String age, String authority) {//Kayiti bu sinifta yapabilmemiz icin verileri alip sakliyoruz
+        this.username = username;
+        this.password = password;
+        this.location = location;
+        this.age = age;
+        this.username = username;
+        this.authority=authority;
+    }
+
+    public void setterUserID(String id) {
+        this.user_id = id;
+    }
+
+    public int getterCounter() {
+        return counter;
+    }
+
+    //Gelen verilere göre tabloyu doldurur
+    private void TableFill(String tbl, Object[] header, int counter, int part) throws Exception {
+
+        Object[][] veri;
+        String sql = "SELECT  isbn,book_title,book_author,year_of_publication,publisher,image_url_m  FROM " + tbl + " LIMIT  " + (part - 40) + ", 40";
+        connection connect = new connection();
+        PreparedStatement pre = connect.connectionOpen(sql);
+
+        try (ResultSet set = pre.executeQuery()) {
+            int count = 0;
+            set.last();
+            count = set.getRow();
+            veri = new Object[count][counter];
+            set.first();
+            for (int i = 0; i < count; i++) {
+                for (int j = 0; j < counter; j++) {
+                    veri[i][j] = set.getObject(j + 1);
+                }
+                set.next();
+
+                booksTable.setModel(new DefaultTableModel(veri, header));
+            }
+            connect.connectionClose();
+
+        }
+    }
+
+    public static void main(String args[]) {
+
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(RatingBook.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        //</editor-fold>
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    new RatingBook().setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(RatingBook.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+    }
+
+    // Variables declaration - do not modify                     
+    private javax.swing.JButton booksList;
+    private javax.swing.JTable booksTable;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane12;
+    private javax.swing.JComboBox<String> partbooksComboBox;
+    private javax.swing.JLabel picturebookLabel;
+    private javax.swing.JButton ratingButton;
+    private javax.swing.JComboBox<String> ratingComboBox;
+    // End of variables declaration                   
+}
+
+
+package book.read.suggest;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
+public class Register extends javax.swing.JFrame {
+
+    private ResultSet res; // sorgulardan dönecek kayýtlar (sonuç kümesi) bu nesne içerisinde tutulacak
+    private Connection conn = null; //Baðlantý nesnemiz
+    private String properties = "?useUnicode=true&characterEncoding=utf8"; //Türkçe karakter problemi yaþamamak için
+
+    public Register() {
+        initComponents();
+    }
+
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        registerButton = new javax.swing.JButton();
+        registerUsername = new javax.swing.JTextField();
+        registerPassword = new javax.swing.JPasswordField();
+        registerUserID = new javax.swing.JTextField();
+        registerLocation = new javax.swing.JTextField();
+        registerAge = new javax.swing.JTextField();
+        authorityComboBox = new javax.swing.JComboBox<>();
+        jLabel7 = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
+        jLabel1.setText("Kayýt Ol");
+
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jLabel2.setText("Kullanýcý Adý");
+
+        jLabel3.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jLabel3.setText("Parola");
+
+        jLabel4.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jLabel4.setText("Lokasyon");
+
+        jLabel5.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jLabel5.setText("Yaþ");
+
+        jLabel6.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jLabel6.setText("Kullanýcý ID");
+
+        registerButton.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        registerButton.setText("Kayýt Ol");
+        registerButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                registerButtonMouseClicked(evt);
+            }
+        });
+
+        authorityComboBox.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        authorityComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Normal Kullanýcý", "Yönetici" }));
+
+        jLabel7.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jLabel7.setText("Kullanýcý Yetkisi");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(188, 188, 188)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(authorityComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(237, 237, 237)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(registerUsername)
+                            .addComponent(registerPassword)
+                            .addComponent(registerUserID)
+                            .addComponent(registerLocation)
+                            .addComponent(registerAge, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(registerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(30, 30, 30))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(registerUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(9, 9, 9)))
+                .addGap(19, 19, 19)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(registerPassword))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(registerUserID, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(registerLocation))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(22, 22, 22)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(registerAge, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(authorityComboBox, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
+                    .addComponent(registerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(31, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(31, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>                        
+
+    private void registerButtonMouseClicked(java.awt.event.MouseEvent evt) {                                            
+
+        try {
+            String username = registerUsername.getText();//Textfield kisimlarindaki degerleri degiskenlere atiyoruz
+            String password = registerPassword.getText();
+            String userid = registerUserID.getText();
+            String location = registerLocation.getText();
+            String age = registerAge.getText();
+            String authority = authorityComboBox.getSelectedIndex() + "";
+
+            int control = Control(username, userid);
+
+            if (username.equals("") | password.equals("") | userid.equals("") | location.equals("") | age.equals("")) {//Alanlarda bos birakilmis mi onu kontrol ediyoruz
+                JOptionPane.showConfirmDialog(null, "Tekrar Deneyiniz. Lütfen Heryeri Doldurunuz", "Users Table", JOptionPane.PLAIN_MESSAGE);
+                control = 2;
+            }
+
+            if (control == 0) { //UserID veya username kayitli degilse 0 dondurup oylama icin diger sinifa verileri gonderiyor 
+                //  Orada da en az 10 oy kullaninca kayiti tamamliyor
+                JOptionPane.showConfirmDialog(null, "Son Bir Adým Kaldý", "Users Table", JOptionPane.PLAIN_MESSAGE);
+                RatingBook rating = new RatingBook();
+                rating.setValues(username, password, location, age, authority);
+                rating.setterUserID(userid);
+                rating.setVisible(true);
+
+            } else if (control == 1) {
+                JOptionPane.showConfirmDialog(null, "Kullanici ID'si veya Kullanýcý Adý Kayýtlý. Kayýt Edilemedi ", "Users Table", JOptionPane.PLAIN_MESSAGE);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }                                           
+
+    public void RegisterData(String username, String password, String user_id, String location, String age, String authority) throws Exception {
+        String sql = "INSERT INTO users (username, password, user_id, location,age,authority) VALUES (?,?,?,?,?,?)";//Gelen verilere gore kullanýcýyý ekliyor
+        connection connect = new connection();
+        PreparedStatement pre = connect.connectionOpen(sql);
+        pre.setString(1, username);
+        pre.setString(2, password);
+        pre.setString(3, user_id);
+        pre.setString(4, location);
+        pre.setString(5, age);
+        pre.setString(6, authority);
+        pre.executeUpdate(); //sorguyu çalýþtýr
+        connect.connectionClose();
+    }
+
+    public int Control(String username, String userid) throws Exception {
+        String sql = "SELECT user_id , username FROM users WHERE user_id = ? OR username = ? LIMIT 1"; //Sql sorgumuz
+        connection connect = new connection();
+        PreparedStatement pre = connect.connectionOpen(sql);
+        pre.setString(1, userid); //Sql sorgusundaki ? isaretli kisma gelir
+        pre.setString(2, username);
+        res = pre.executeQuery(); //Sql sorgusunu calistirir
+        String user_id = "-1"; //Karsilastirma yaparken hata cikmamasi icin default degerler atadým
+        String user_name = "-1";
+
+        while (res.next()) {
+            user_id = res.getString("user_id");
+            user_name = res.getString("username");
+        }
+
+        connect.connectionClose();
+
+        if (user_id.equals(userid) | user_name.equals(username)) { //Username veya userid varsa 1 dondurup kayiti onaylamayacak
+            return 1;
+        }
+
+        return 0;
+    }
+
+    public static void main(String args[]) {
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Register.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Register().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify                     
+    private javax.swing.JComboBox<String> authorityComboBox;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField registerAge;
+    public javax.swing.JButton registerButton;
+    private javax.swing.JTextField registerLocation;
+    private javax.swing.JPasswordField registerPassword;
+    private javax.swing.JTextField registerUserID;
+    private javax.swing.JTextField registerUsername;
+    // End of variables declaration                   
+}
+
+
+package book.read.suggest;
+
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.table.DefaultTableModel;
+
+public class Suggest extends javax.swing.JFrame {
+
+    private ResultSet res; // sorgulardan dönecek kayýtlar (sonuç kümesi) bu nesne içerisinde tutulacak
+    private int user_id;
+
+    public Suggest() {
+        initComponents();
+    }
+
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    private void initComponents() {
+
+        suggestButton = new javax.swing.JButton();
+        suggestpictureLabel = new javax.swing.JLabel();
+        jScrollPane18 = new javax.swing.JScrollPane();
+        suggestbooksTable = new javax.swing.JTable();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        suggestButton.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        suggestButton.setText("Yenile");
+        suggestButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                suggestButtonMouseClicked(evt);
+            }
+        });
+
+        suggestbooksTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "ISBN", "Book-Title", "Book-Author", "Year-Of-Publication", "Publisher", "Image-URL-M	"
+            }
+        ));
+        suggestbooksTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                suggestbooksTableMousePressed(evt);
+            }
+        });
+        jScrollPane18.setViewportView(suggestbooksTable);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(62, 62, 62)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(suggestpictureLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                    .addComponent(suggestButton, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
+                .addGap(108, 108, 108)
+                .addComponent(jScrollPane18, javax.swing.GroupLayout.DEFAULT_SIZE, 806, Short.MAX_VALUE)
+                .addGap(112, 112, 112))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(97, 97, 97)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane18, javax.swing.GroupLayout.DEFAULT_SIZE, 667, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(suggestButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(177, 177, 177)
+                        .addComponent(suggestpictureLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+
+        pack();
+    }// </editor-fold>                        
+
+    private void suggestButtonMouseClicked(java.awt.event.MouseEvent evt) {                                           
+        try {
+
+            //1-Ilk once giris yapan kullanicinin kitaplarinin isbn degerlerini buldum
+            //2-Bulunan isbn degerlerine oy vermis diger kullanicilarin id degerlerini buldum
+            //3-Bulununan kullanicilara default hepsine 0 atadim
+            //4-Giris yapan kullaniciyla ortak en fazla kitabi oylayan kullaniciyi bulup onun kitaplarini oneri olarak gosterdim
+            Object[] header = {"ISBN", "Book Title", "Book Author", "Year Of Publication", "Publisher", "Image URL M"};
+            String sql = "SELECT isbn FROM book_ratings WHERE user_id=" + user_id; //Giriþ yapan kullanýcýnýn oyladýðý kitaplarý bulmak için sql kodu
+            //isbn deðerlerini döndürüyor
+
+            connection connect = new connection();
+            PreparedStatement pre = connect.connectionOpen(sql);
+            res = pre.executeQuery(); //Sql sorgusunu calistirir
+
+            String[] isbn = new String[500000];
+            int count = 0;
+            while (res.next()) { //Bulunan ISBN degerlerini bir arraya atiyorum
+                isbn[count] = res.getString(1);
+                count++;
+            }
+            connect.connectionClose();
+
+            sql = "SELECT user_id FROM book_ratings WHERE user_id!=" + user_id + " AND isbn IN ( " + isbn[0];//Giriþ yapan kullanýcýnýn kitaplarýna oylama yapan kullanýcýlarý döndürüyor
+            for (int i = 1; i < count; i++) {
+                sql = sql + " , " + isbn[i];
+            }
+            sql = sql + " )";
+
+            connect = new connection();
+            pre = connect.connectionOpen(sql);
+            res = pre.executeQuery(); //Sql sorgusunu calistirir
+            String[] user = new String[100000];
+            count = 0;
+            while (res.next()) { //Bulunan user id degerlerini bir arraya atiyorum
+                user[count] = res.getString(1);
+                count++;
+            }
+            user[count] = "control";
+
+            String users[][] = FindUsers(); //Books_rating tablosundaki bulunan tum kullanicilarin user id degerleri
+
+            for (int i = 0; !users[i][0].equals("control"); i++) {
+
+                for (int j = 0; !user[j].equals("control"); j++) {
+                    if (users[i][0].equals(user[j])) {
+                        users[i][1] = "" + (Integer.parseInt(users[i][1]) + 1);
+                        //            System.out.print(i + " " + users[i][0] + " " + users[i][1] + "\n");
+                    }
+                }
+            }
+
+            int max[] = FindMax(users);//Ortak oylanan kitaplardan en fazla hangi kullaniciyla ortak oylama yapilmis o degeri buluyor
+
+        //    System.out.println(max[0] + " Tane ortak kitap vardir");//Ilk indis kac ortak kitap oylanmis
+            //max[1] Ikinci indis ise users arrayindeki indis sayisini gosteriyor
+
+            sql = "SELECT isbn FROM book_ratings WHERE user_id=" + users[max[1]][0];
+            //isbn deðerlerini döndürüyor
+
+            connect = new connection();
+            pre = connect.connectionOpen(sql);
+            res = pre.executeQuery(); //Sql sorgusunu calistirir
+
+            isbn = new String[500000];
+            count = 0;
+            while (res.next()) { //Bulunan ISBN degerlerini bir arraya atiyorum
+                isbn[count] = res.getString(1);
+                count++;
+            }
+
+            sql = "SELECT isbn,book_title,book_author,year_of_publication,publisher,image_url_m FROM books WHERE isbn IN ( '" + isbn[0];
+            for (int i = 1; i < count; i++) {
+                sql = sql + "' , '" + isbn[i];
+            }
+            sql = sql + "') LIMIT 40";
+
+            connect.connectionClose();
+
+            TableFill("suggestbooksTable", header, sql, 6); //Tabloyu dolduruyor
+            connect.connectionClose();
+        } catch (Exception ex) {
+            Logger.getLogger(ListMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }                                          
+
+    public void TableFill(String tbl, Object[] header, String sql, int counter) throws SQLException, Exception {
+
+        Object[][] veri;
+        connection connect = new connection();
+        PreparedStatement pre = connect.connectionOpen(sql);
+
+        try (ResultSet set = pre.executeQuery()) {
+            int count = 0;
+            set.last();
+            count = set.getRow();
+            veri = new Object[count][counter];
+            set.first();
+            for (int i = 0; i < count; i++) {
+                for (int j = 0; j < counter; j++) {
+                    veri[i][j] = set.getObject(j + 1);
+                }
+                set.next();
+            }
+            suggestbooksTable.setModel(new DefaultTableModel(veri, header));
+        }
+        connect.connectionClose();
+    }
+
+    public String[][] FindUsers() throws Exception {
+
+        String[][] users = new String[19000000][2];
+        String sql = "SELECT DISTINCT user_id FROM book_ratings";
+
+        connection connect = new connection();
+        PreparedStatement pre = connect.connectionOpen(sql);
+        res = pre.executeQuery(); //Sql sorgusunu calistirir
+        int count = 0;
+        while (res.next()) {//Kullanicinin id'sini degiskene atiyor
+            users[count][0] = res.getString("user_id");
+            users[count][1] = "0";
+            count++;
+        }
+        users[count][0] = "control";
+
+        return users;
+    }
+
+    public int[] FindMax(String array[][]) {
+
+        int[] max = new int[19000000];
+        max[0] = Integer.parseInt(array[0][1]);
+
+        for (int i = 1; !array[i + 1][0].equals("control"); i++) {
+            if (Integer.parseInt(array[i][1]) > max[0]) {
+                max[0] = Integer.parseInt(array[i][1]);
+                max[1] = i;
+            }
+        }
+
+        return max;
+    }
+
+    private void suggestbooksTableMousePressed(java.awt.event.MouseEvent evt) {                                               
+        try {
+            String urlPath = (suggestbooksTable.getValueAt(suggestbooksTable.getSelectedRow(), 5).toString()); //5. sutun yani Medium boyunu aliyor
+            URL url = new URL(urlPath);
+            BufferedImage img = ImageIO.read(url);
+            ImageIcon icon = new ImageIcon(img);
+            suggestpictureLabel.setIcon(icon);
+        } catch (IOException ex) {
+            Logger.getLogger(ListMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }                                              
+//Her sayfaya 40 satir gelecek sekilde sayfalama yaptim. Toplam veri adedini 40'a bolup kac sayfa olacak ise 1'den o sayfaya kadar ComboBox'a yerlestirdim
+
+    public void setterUserID(int user_id) {
+        this.user_id = user_id;
+    }
+
+    public static void main(String args[]) {
+
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Suggest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Suggest().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify                     
+    private javax.swing.JScrollPane jScrollPane18;
+    private javax.swing.JButton suggestButton;
+    private javax.swing.JTable suggestbooksTable;
+    private javax.swing.JLabel suggestpictureLabel;
+    // End of variables declaration                   
+}
+
